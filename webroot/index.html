@@ -1,22 +1,64 @@
-<html>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
 
-        <p style="margin-top: 150px"></p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Desk Control</title>
+    <link rel="stylesheet" href="desk.css">
+</head>
 
-        <p>Desk control</p>         
-        
-        <script>
+<body>
+
+    <h1>Desk control</h1>
+
+    <p>
+    Click the buttons below to toggle the individual desk buttons on and off.
+    </p>
+
+    <p>
+    If both buttons are clicked, then the desk buttons are disabled.
+    </p>
+
+    <div class="grid-container" </div>
+
+        <div style="padding-top:8px" class="grid-item">Raise:</div>
+        <div class="grid-item">
+            <label class="switch">
+                <input id="bt_raise" type="checkbox" onclick="handleClick()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div style="padding-top:8px" class="grid-item">Lower:</div>
+        <div class="grid-item">
+            <label class="switch">
+                <input id="bt_lower" type="checkbox" onclick="handleClick()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+    <script>
+        function handleClick() {
+            raise = document.getElementById('bt_raise').checked
+            lower = document.getElementById('bt_lower').checked            
+            console.log(raise)
+            console.log(lower)            
+            q = ''
+            if(raise) {
+                q = '?raise'
+                if(lower) {
+                    q = q + '&lower'
+                }
+            } else if(lower) {
+                q = '?lower'
+            }
             
-            var ws = new WebSocket("ws://localhost:8080/ws")
+            fetch('/desk'+q, { method: 'GET' })
+        }
+    </script>
 
-            ws.onopen = function() {                
-                ws.send("test message for server")
-            }
+</body>
 
-            ws.onmessage = function(evt) {
-                alert("got back:"+evt.data)
-            }
-
-        </script>
-    </body>
 </html>
