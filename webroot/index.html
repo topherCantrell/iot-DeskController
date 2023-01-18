@@ -18,10 +18,10 @@
     </p>
 
     <p>
-    If both buttons are clicked, then the desk buttons are disabled.
+    If both buttons are active, then the desk buttons are disabled.
     </p>
 
-    <div class="grid-container" </div>
+    <div class="grid-container">
 
         <div style="padding-top:8px" class="grid-item">Raise:</div>
         <div class="grid-item">
@@ -38,8 +38,20 @@
                 <span class="slider round"></span>
             </label>
         </div>
+        
+    </div>
+
+    <div>
+    <input id="val_stand" value="38.5" size="4"><button onclick="handleGoto('val_stand')">Stand</button><p>
+    <input id="val_sit" value="13.0" size="4"><button onclick="handleGoto('val_sit')">Sit</button>
+    </div>
 
     <script>
+        function handleGoto(valueName) {
+            height = document.getElementById(valueName).value
+            
+            fetch('/desk?goto='+height, { method: 'GET' })
+        }
         function handleClick() {
             raise = document.getElementById('bt_raise').checked
             lower = document.getElementById('bt_lower').checked            
