@@ -1,0 +1,24 @@
+CIRCUITPY_WIFI_SSID = "?"
+CIRCUITPY_WIFI_PASSWORD = "?"
+
+# Desk configuration
+
+USE_SONAR = 1
+USE_RFID = 1
+USE_EXTRA_BUTTONS = 1
+USE_WEB = 1
+USE_DESK_BUTTONS = 0
+USE_LED = 1
+
+# Desk calibration
+
+DESK_MIN_HEIGHT = "7.0"
+DESK_MAX_HEIGHT = "36.0"
+
+DESK_DRIFT_TIME_UP = "1.25"
+DRIFT_TIME_DOWN = "1.25"
+
+# User preferences
+
+PRESET_TOP = "20.0"
+PRESET_BOTTOM = "13.5"

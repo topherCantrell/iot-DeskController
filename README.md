@@ -20,13 +20,20 @@ Hacking the controls that raise/lower my desk
 
 ![](art/schematic.jpg)
 
-
 # Wiring
-  | Jack   | Male Color | Female Color | Function |
-  | ----   | ----       | ----         | ----     |
-  | tip    | white      | white        | common   | 
-  | middle | red        | red          | raise    |
-  | bottom | bare       | yellow       | lower    |
+```                     Gray         Red
+     Motors/        UP --------  X  --------  Connectors
+     Buttons
+                        White        Green 
+                COMMON --------  X  --------
+
+                        Black        White
+                  DOWN --------  X  --------
+
+The male connector with pins covered connects to the desk motor controller.
+
+The female connector with the pins shrouded connects to the desk buttons.
+```
 
 # Height sensor
 

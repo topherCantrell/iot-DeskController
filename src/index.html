@@ -1,0 +1,104 @@
+<html>
+    <body>
+        <h1>Desk Control</h1>
+        <span style="display: inline-block;width:100px;text-align:right">Desk Height:</span>
+        <span id="sp_desk_height">???</span>
+        <p>
+        <p>
+        <span style="display: inline-block;width:100px;text-align:right">Top:</span>
+        <input id="in_top" style="width:80px" value="???">
+        <button onclick="goto(true)">Goto</button>
+        <button onclick="setPoint(true)">Save</button>
+        <p>
+        <span style="display: inline-block;width:100px;text-align:right">Bottom:</span>
+        <input id="in_bottom" style="width:80px" value="???">
+        <button onclick="goto(false)">Goto</button>
+        <button onclick="setPoint(false)">Save</button>
+        <p>
+        <span style="display: inline-block;width:190px;text-align:right"></span>
+        <button onclick="writeRing()">Write Both</button>
+        <p>
+        <span style="display: inline-block;width:100px;text-align:right">Manual:</span>
+        <p>
+        <span style="display: inline-block;width:100px;text-align:right">Up:</span>
+        <input id="cb_up" onchange="manualMotors()" type="checkbox">
+        <br>
+        <span style="display: inline-block;width:100px;text-align:right">Down:</span>
+        <input id="cb_down" onchange="manualMotors()" type="checkbox">
+        <p>
+        <span style="display: inline-block;width:85px;text-align:right"></span>
+        <button onclick="stop()">STOP</button>
+
+<script>
+
+    function updateUI(deskData) {
+        document.getElementById('sp_desk_height').textContent = deskData['current_height']
+        document.getElementById('in_top').value = deskData['set_up']
+        document.getElementById('in_bottom').value = deskData['set_down']
+    }
+
+    function controlDesk(params) {
+        console.log('control:',params)
+        fetch('desk'+params, {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(jsonData => updateUI(jsonData))
+        .catch(err => {
+            console.log('Error getting desk json data',err)
+        })
+    }
+
+    function stop() {
+        console.log('STOP')
+        controlDesk('?motors=')     
+        document.getElementById('cb_up').checked = false   
+        document.getElementById('cb_down').checked = false
+    }
+
+    function goto(go_up) {
+        console.log('GOTO ',go_up)
+        if(go_up) {
+            height = document.getElementById('in_top').value
+        } else {
+            height = document.getElementById('in_bottom').value
+        }        
+        controlDesk('?goto='+height)
+    }
+
+    function setPoint(set_up) {
+        console.log('SET POINT ',set_up)
+        if(set_up) {
+            height = document.getElementById('in_top').value
+            controlDesk('?setUp='+height)
+        } else {
+            height = document.getElementById('in_bottom').value
+            controlDesk('?setDown='+height)
+        }                
+    }
+
+    function writeRing() {
+        console.log('WRITE RING')
+        controlDesk('?writeBoth')
+    }
+
+    function manualMotors() {
+        console.log('MANUAL MOTORS')
+        up = document.getElementById('cb_up').checked
+        down = document.getElementById('cb_down').checked
+        s = '?motors='
+        if(up) {
+            s = s + 'up'
+        }
+        if(down) {
+            s = s + '+down'
+        }
+        controlDesk(s)
+    }
+
+    controlDesk('')
+
+</script>
+
+    </body>
+</html>
