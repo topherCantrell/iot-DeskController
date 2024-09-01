@@ -13,28 +13,20 @@ buttons = None
 web = None
 led = None
 
-tasks = []
+services = {}
 
 hard = Hardware()
-desk = DeskHeight()
-led = LED()
-rfid = RFID()
-buttons = ExtraButtons()
-web = WebServer()
 
-desk.set_dependencies(hard)
-tasks.append(desk.run_task())
+services['desk'] = DeskHeight(hard, services)
+services['led'] = LED(hard, services)
+services['rfid'] = RFID(hard, services)
+services['buttons'] = ExtraButtons(hard, services)
+services['web'] = WebServer(hard, services)
 
-led.set_dependencies(hard)
-tasks.append(led.run_task())
-
-rfid.set_dependencies(hard, desk, led)
-tasks.append(rfid.run_task())
-
-buttons.set_dependencies(hard, desk, rfid, led)
-tasks.append(buttons.run_task())
-
-web.set_dependencies(hard, desk, rfid)
-tasks.append(web.run_task())
-
-asyncio.run(asyncio.gather(*tasks))
+asyncio.run(asyncio.gather(
+    services['desk'].run_task(),
+    services['led'].run_task(),
+    services['rfid'].run_task(),
+    services['buttons'].run_task(),
+    services['web'].run_task()
+))
