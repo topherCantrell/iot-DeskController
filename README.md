@@ -1,7 +1,7 @@
 # IoT Desk Controller
 
-Adding a microcontroller and an Adafruit RFID ring reader to control the height of my desk at work. Waving
-your hand over the desk to move it feels like using the Force!
+I added a microcontroller, distance sensor, and an Adafruit RFID ring reader to control the height of 
+my desk at work. Waving your hand over the desk to move it feels like using the Force!
 
 See the detailed article in Circuit Cellar magazine:
 
